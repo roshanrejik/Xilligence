@@ -11,8 +11,7 @@ import { COLORS, SPACING, FONT_SIZES } from '../constants/theme';
 import i18n from '../utils/i18n';
 import SchemeData from '../data/scheme.json';
 
-// Simple Splitter line matching HTML
-const SectionSpacer = () => <View style={styles.spacer} />;
+
 
 const SectionHeader = ({ title }: { title: string }) => (
     <View style={styles.sectionHeaderRow}>
@@ -88,11 +87,11 @@ export const SchemeDetailsScreen = () => {
 
                 <NavGraph data={nav_json || []} />
 
-                <SectionSpacer />
+
 
                 <ReturnAnalysis />
 
-                <SectionSpacer />
+
 
                 {/* Analytics Section */}
                 <View style={styles.sectionContainer}>
@@ -111,7 +110,7 @@ export const SchemeDetailsScreen = () => {
                     </View>
                 </View>
 
-                <SectionSpacer />
+
 
                 <View style={styles.sectionContainer}>
                     <SectionHeader title="Allocation Analysis" />
@@ -122,7 +121,7 @@ export const SchemeDetailsScreen = () => {
                     <AllocationChart />
                 </View>
 
-                <SectionSpacer />
+
 
                 {/* Holding Analysis */}
                 <View style={styles.sectionContainer}>
@@ -156,11 +155,11 @@ export const SchemeDetailsScreen = () => {
                     </View>
                 </View>
 
-                <SectionSpacer />
+
 
                 <Riskometer />
 
-                <SectionSpacer />
+
 
                 {/* Scheme Info */}
                 <View style={styles.sectionContainer}>
@@ -182,7 +181,7 @@ export const SchemeDetailsScreen = () => {
                     </View>
                 </View>
 
-                <SectionSpacer />
+
 
                 {/* Fund Manager */}
                 <View style={styles.sectionContainer}>
@@ -198,7 +197,7 @@ export const SchemeDetailsScreen = () => {
                     ))}
                 </View>
 
-                <SectionSpacer />
+
 
                 <ReturnCalculator />
 
@@ -252,7 +251,7 @@ const InfoCell = ({ icon, title, value, subValue, isFull }: any) => (
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: COLORS.background,
+        backgroundColor: '#f3f4f6',
     },
     topHeader: {
         backgroundColor: COLORS.primary,
@@ -316,15 +315,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    spacer: {
-        height: 10,
-        backgroundColor: 'rgba(243, 244, 246, 0.8)', // gray-100/80
-        marginVertical: 8,
-    },
+
     sectionContainer: {
-        paddingHorizontal: 20,
-        paddingVertical: 24,
-        backgroundColor: COLORS.background,
+        backgroundColor: COLORS.white,
+        marginHorizontal: 16,
+        marginBottom: 16,
+        borderRadius: 16,
+        padding: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+        elevation: 2,
     },
     sectionHeaderRow: {
         flexDirection: 'row',

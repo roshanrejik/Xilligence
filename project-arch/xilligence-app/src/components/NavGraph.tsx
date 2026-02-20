@@ -13,8 +13,8 @@ interface NavGraphProps {
 }
 
 const { width } = Dimensions.get('window');
-// Padding 20 on each side (px-5)
-const GRAPH_WIDTH = width;
+// Padding 16 on each side
+const GRAPH_WIDTH = width - 32;
 const GRAPH_HEIGHT = 224; // h-56
 
 export const NavGraph: React.FC<NavGraphProps> = ({ data }) => {
@@ -101,8 +101,17 @@ export const NavGraph: React.FC<NavGraphProps> = ({ data }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.background,
+        backgroundColor: COLORS.white,
+        marginHorizontal: 16,
+        marginBottom: 16,
+        borderRadius: 16,
         paddingTop: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+        elevation: 2,
+        overflow: 'hidden',
     },
     header: {
         paddingHorizontal: 20,
