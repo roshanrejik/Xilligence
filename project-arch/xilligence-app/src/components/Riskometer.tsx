@@ -1,45 +1,49 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { ChevronUp } from 'lucide-react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ChevronUp, ChevronDown } from 'lucide-react-native';
 import { COLORS } from '../constants/theme';
 
 export const Riskometer = () => {
+    const [expanded, setExpanded] = useState(true);
+
     return (
         <View style={styles.container}>
-            <View style={styles.headerRow}>
+            <TouchableOpacity style={styles.headerRow} onPress={() => setExpanded(!expanded)} activeOpacity={0.7}>
                 <Text style={styles.title}>Riskometer</Text>
-                <ChevronUp color={COLORS.textMuted} size={20} />
-            </View>
+                {expanded ? <ChevronUp color={COLORS.textMuted} size={20} /> : <ChevronDown color={COLORS.textMuted} size={20} />}
+            </TouchableOpacity>
 
-            <View style={styles.content}>
-                {/* Gauge Bar */}
-                <View style={styles.gaugeContainer}>
-                    <View style={[styles.gaugeSegment, { backgroundColor: '#6ea18a' }]} />
-                    <View style={[styles.gaugeSegment, { backgroundColor: '#aed581' }]} />
-                    <View style={[styles.gaugeSegment, { backgroundColor: '#fff176' }]} />
-                    <View style={[styles.gaugeSegment, { backgroundColor: '#ffb74d' }]} />
-                    <View style={[styles.gaugeSegment, { backgroundColor: '#ef5350' }]} />
-                </View>
+            {expanded && (
+                <View style={styles.content}>
+                    {/* Gauge Bar */}
+                    <View style={styles.gaugeContainer}>
+                        <View style={[styles.gaugeSegment, { backgroundColor: '#6ea18a' }]} />
+                        <View style={[styles.gaugeSegment, { backgroundColor: '#aed581' }]} />
+                        <View style={[styles.gaugeSegment, { backgroundColor: '#fff176' }]} />
+                        <View style={[styles.gaugeSegment, { backgroundColor: '#ffb74d' }]} />
+                        <View style={[styles.gaugeSegment, { backgroundColor: '#ef5350' }]} />
+                    </View>
 
-                {/* Labels */}
-                <View style={styles.labelsRow}>
-                    <Text style={styles.label}>Low</Text>
-                    <Text style={styles.label}>Low to{'\n'}Moderate</Text>
-                    <Text style={styles.label}>Moderate</Text>
-                    <Text style={styles.label}>Moderately{'\n'}High</Text>
-                    <Text style={styles.label}>Very High</Text>
-                </View>
+                    {/* Labels */}
+                    <View style={styles.labelsRow}>
+                        <Text style={styles.label}>Low</Text>
+                        <Text style={styles.label}>Low to{'\n'}Moderate</Text>
+                        <Text style={styles.label}>Moderate</Text>
+                        <Text style={styles.label}>Moderately{'\n'}High</Text>
+                        <Text style={styles.label}>Very High</Text>
+                    </View>
 
-                <Text style={styles.disclaimerText}>
-                    Investors must understand that their investment will be at
-                </Text>
+                    <Text style={styles.disclaimerText}>
+                        Investors must understand that their investment will be at
+                    </Text>
 
-                <View style={styles.badgeContainer}>
-                    <View style={styles.badge}>
-                        <Text style={styles.badgeText}>Very High Risk</Text>
+                    <View style={styles.badgeContainer}>
+                        <View style={styles.badge}>
+                            <Text style={styles.badgeText}>Very High Risk</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
+            )}
         </View>
     );
 };
@@ -61,7 +65,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 24,
     },
     title: {
         fontSize: 17,

@@ -13,12 +13,27 @@ import SchemeData from '../data/scheme.json';
 
 
 
-const SectionHeader = ({ title }: { title: string }) => (
-    <View style={styles.sectionHeaderRow}>
-        <Text style={styles.sectionTitle}>{title}</Text>
-        <ChevronUp color={COLORS.textMuted} size={20} />
-    </View>
-);
+const AccordionSection = ({ title, children, defaultExpanded = false }: any) => {
+    const [expanded, setExpanded] = useState(defaultExpanded);
+
+    return (
+        <View style={styles.sectionContainer}>
+            <TouchableOpacity
+                style={styles.sectionHeaderRow}
+                onPress={() => setExpanded(!expanded)}
+                activeOpacity={0.7}
+            >
+                <Text style={styles.sectionTitle}>{title}</Text>
+                {expanded ? <ChevronUp color={COLORS.textMuted} size={20} /> : <ChevronDown color={COLORS.textMuted} size={20} />}
+            </TouchableOpacity>
+            {expanded && (
+                <View style={styles.sectionContent}>
+                    {children}
+                </View>
+            )}
+        </View>
+    );
+};
 
 export const SchemeDetailsScreen = () => {
     const [data, setData] = useState<any>(null);
@@ -94,8 +109,7 @@ export const SchemeDetailsScreen = () => {
 
 
                 {/* Analytics Section */}
-                <View style={styles.sectionContainer}>
-                    <SectionHeader title="Analytics" />
+                <AccordionSection title="Analytics" defaultExpanded={true}>
                     <View style={styles.analyticsList}>
                         {/* Using mock data identical to HTML */}
                         <AnalyticsRow icon={<Text style={styles.boldChar}>β</Text>} title="Beta : 0.85" subtitle="Slightly less volatile than the market" />
@@ -108,24 +122,22 @@ export const SchemeDetailsScreen = () => {
                         <AnalyticsRow icon={<ArrowUpToLine color="#059669" size={20} />} title="Up Capture: 95–100%" subtitle="Captures almost all upside of the market." />
                         <AnalyticsRow icon={<BadgeAlert color="#059669" size={20} />} title="Information Ratio: 0.5 – 0.7" subtitle="Reasonably consistent in generating alpha over benchmark." />
                     </View>
-                </View>
+                </AccordionSection>
 
 
 
-                <View style={styles.sectionContainer}>
-                    <SectionHeader title="Allocation Analysis" />
+                <AccordionSection title="Allocation Analysis" defaultExpanded={false}>
                     <View style={styles.allocationTabs}>
                         <Text style={[styles.allocTab, styles.allocTabActive]}>Asset Class</Text>
                         <Text style={styles.allocTab}>Sector</Text>
                     </View>
                     <AllocationChart />
-                </View>
+                </AccordionSection>
 
 
 
                 {/* Holding Analysis */}
-                <View style={styles.sectionContainer}>
-                    <SectionHeader title="Holding Analysis" />
+                <AccordionSection title="Holding Analysis" defaultExpanded={false}>
                     <View style={styles.tableContainer}>
                         <View style={styles.tableHead}>
                             <Text style={[styles.th, { flex: 2 }]}>Security name</Text>
@@ -153,7 +165,7 @@ export const SchemeDetailsScreen = () => {
                             <ChevronDown color={COLORS.textMuted} size={14} />
                         </TouchableOpacity>
                     </View>
-                </View>
+                </AccordionSection>
 
 
 
@@ -162,8 +174,7 @@ export const SchemeDetailsScreen = () => {
 
 
                 {/* Scheme Info */}
-                <View style={styles.sectionContainer}>
-                    <SectionHeader title="Scheme Info" />
+                <AccordionSection title="Scheme Info" defaultExpanded={false}>
                     <Text style={styles.schemeObjText}>
                         <Text style={{ fontWeight: 'bold', color: COLORS.black }}>Objective:</Text> To generate long-term capital growth from an actively managed portfolio primarily of equity and Equity Related Securities.
                     </Text>
@@ -179,13 +190,12 @@ export const SchemeDetailsScreen = () => {
                         <InfoCell icon={<Folder size={14} color="#6ea18a" />} title="RTA" value="CAMS" />
                         <InfoCell icon={<Contact size={14} color="#6ea18a" />} title="Contact Details" value="81/82, 8th Floor, Sakhar Bhavan, Ramnath Goenka Marg, 230, Nariman Point, Mumbai 400021\nTel no.: 022-61406555" isFull />
                     </View>
-                </View>
+                </AccordionSection>
 
 
 
                 {/* Fund Manager */}
-                <View style={styles.sectionContainer}>
-                    <SectionHeader title="Fund Manager" />
+                <AccordionSection title="Fund Manager" defaultExpanded={false}>
                     {[1, 2, 3, 4].map(idx => (
                         <View key={idx} style={styles.managerRow}>
                             <View style={styles.managerAvatar}><Text style={styles.avatarText}>RT</Text></View>
@@ -195,7 +205,7 @@ export const SchemeDetailsScreen = () => {
                             </View>
                         </View>
                     ))}
-                </View>
+                </AccordionSection>
 
 
 
@@ -257,11 +267,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         zIndex: 50,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4,
+        // Removed shadows so it merges with the greenBackdrop inside SchemeHeader
     },
     headerContent: {
         flexDirection: 'row',
@@ -292,18 +298,13 @@ const styles = StyleSheet.create({
     cartBadge: {
         position: 'absolute',
         top: -6,
-        right: -6,
+        right: -8,
         backgroundColor: COLORS.white,
         width: 16,
         height: 16,
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 1,
-        elevation: 2,
     },
     cartBadgeText: {
         color: COLORS.primary,
@@ -321,7 +322,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginBottom: 16,
         borderRadius: 16,
-        padding: 16,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#f0f3f5',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.05,
@@ -332,12 +335,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 24,
+        padding: 18,
+        backgroundColor: '#f8f9fa',
+        borderBottomWidth: 1,
+        borderBottomColor: '#f0f3f5',
+    },
+    sectionContent: {
+        paddingTop: 16,
+        paddingHorizontal: 16,
+        paddingBottom: 20,
     },
     sectionTitle: {
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: 'bold',
-        color: '#111827',
+        color: '#1f2937', // Slightly softer header color
     },
     // Analytics
     analyticsList: {
