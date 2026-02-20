@@ -1,0 +1,35 @@
+{
+    "schemeDetails": {
+        "title": "Scheme Details",
+        "nav": "NAV",
+        "minInvestment": "Min Investment",
+        "oneYearReturn": "1Y Return",
+        "returns": "Returns",
+        "navDetails": "NAV Details",
+        "returnAnalysis": "Return Analysis",
+        "sipReturns": "SIP Returns",
+        "lumpsumReturns": "Lumpsum Returns",
+        "returnCalculator": "Return Calculator",
+        "monthlySip": "Monthly SIP",
+        "oneTime": "One Time",
+        "totalInvested": "Total Invested",
+        "estimatedValue": "Estimated Value",
+        "riskometer": "Riskometer",
+        "buyNow": "Buy Now",
+        "investOptions": "Investment Options",
+        "fundInformation": "Fund Information",
+        "aboutFund": "About Fund",
+        "tags": {
+            "equity": "Equity",
+            "flexiCap": "Flexi Cap",
+            "growth": "Growth"
+        },
+        "months": {
+            "3M": "3M",
+            "6M": "6M",
+            "1Y": "1Y",
+            "3Y": "3Y",
+            "MAX": "ALL"
+        }
+    }
+}
